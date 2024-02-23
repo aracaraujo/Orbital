@@ -16,6 +16,7 @@
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "position.h"      // for POINT
 #include <vector>
+#include "cmath"
 using namespace std;
 
 /*************************************************************************
@@ -66,6 +67,11 @@ public:
         return stars;
     }
 
+    double earthRotation(){
+
+       return -(2 * M_PI/ 30 ) * (1440.0/86400.0);
+   }
+
    Position ptHubble;
    Position ptSputnik;
    Position ptStarlink;
@@ -114,7 +120,7 @@ void callBack(const Interface* pUI, void* p)
    //
 
    // rotate the earth
-   pDemo->angleEarth += 0.01;
+   pDemo->angleEarth += pDemo->earthRotation();
    pDemo->angleShip += 0.02;
    pDemo->phaseStar++;
 
