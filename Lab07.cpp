@@ -188,15 +188,15 @@ void callBack(const Interface* pUI, void* p)
 //   gout.drawShip      (pDemo->ptShip,       pDemo->angleShip, pUI->isSpace());
    gout.drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
 
-   // draw parts
+//    draw parts
 //   pt.setPixelsX(pDemo->ptCrewDragon.getPixelsX() + 20);
 //   pt.setPixelsY(pDemo->ptCrewDragon.getPixelsY() + 20);
 //   gout.drawCrewDragonRight(pt, pDemo->angleShip); // notice only two parameters are set
 //   pt.setPixelsX(pDemo->ptHubble.getPixelsX() + 20);
 //   pt.setPixelsY(pDemo->ptHubble.getPixelsY() + 20);
 //   gout.drawHubbleLeft(pt, pDemo->angleShip);      // notice only two parameters are set
-   pt.setPixelsX(pDemo->ptGPS.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptGPS.getPixelsY() + 20);
+//   pt.setPixelsX(pDemo->ptGPS.getPixelsX() + 20); *
+//   pt.setPixelsY(pDemo->ptGPS.getPixelsY() + 20); *
 //   gout.drawGPSCenter(pt, pDemo->angleShip);       // notice only two parameters are set
 //   pt.setPixelsX(pDemo->ptStarlink.getPixelsX() + 20);
 //   pt.setPixelsY(pDemo->ptStarlink.getPixelsY() + 20);

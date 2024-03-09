@@ -9,6 +9,7 @@
 
 #include "test.h"
 #include "testPosition.h"
+#include "testVelocity.h"
 
 /*****************************************************************
  * TEST RUNNER
@@ -17,4 +18,5 @@
 void testRunner()
 {
    TestPosition().run();
+   TestVelocity().run();
 }
