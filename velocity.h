@@ -41,7 +41,7 @@ public:
         this->dx = dx;
     };
 
-    void updateVelocity(double ddy, double ddx, double time) {};
+    void updateVelocity(double ddy, double ddx, double time);
 
 private:
     double dy; // vertical
