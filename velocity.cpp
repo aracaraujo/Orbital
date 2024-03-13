@@ -3,3 +3,10 @@
 //
 
 #include "velocity.h"
+
+void Velocity::updateVelocity(double ddy, double ddx, double time) {
+    // Updating the vertical velocity.
+    dy = dy + (ddy * time);
+    // Updating the horizontal velocity.
+    dx = dx + (ddx * time);
+};
