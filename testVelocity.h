@@ -93,7 +93,7 @@ private:
         velocityOne += velocityTwo;
         // verify
         assert(velocityOne.dy == 200.0);
-        assert(velocityTwo.dx == 250.0);
+        assert(velocityOne.dx == 250.0);
         // Teardown
     }
 
@@ -106,7 +106,7 @@ private:
         velocityOne -= velocityTwo;
         // verify
         assert(velocityOne.dy == -200.0);
-        assert(velocityTwo.dx == -250.0);
+        assert(velocityOne.dx == -250.0);
         // Teardown
     }
 
