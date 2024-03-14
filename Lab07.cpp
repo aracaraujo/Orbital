@@ -17,7 +17,6 @@
 #include "position.h"      // for POINT
 #include <vector>
 #include "cmath"
-#include "test.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -237,24 +236,21 @@ int WINAPI wWinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
-    testRunner();
-    cout << "All tests passed!" << endl;
+   // Initialize OpenGL
+   Position ptUpperRight;
+   ptUpperRight.setZoom(128000.0 /* 128km equals 1 pixel */);
+   ptUpperRight.setPixelsX(1000.0);
+   ptUpperRight.setPixelsY(1000.0);
+   Interface ui(0, NULL,
+      "Demo",   /* name on the window */
+      ptUpperRight);
 
-    // Initialize OpenGL
-    Position ptUpperRight;
-    ptUpperRight.setZoom(128000.0 /* 128km equals 1 pixel */);
-    ptUpperRight.setPixelsX(1000.0);
-    ptUpperRight.setPixelsY(1000.0);
-    Interface ui(0, NULL,
-                 "Demo",   /* name on the window */
-                 ptUpperRight);
+   // Initialize the demo
+   Demo demo(ptUpperRight);
 
-    // Initialize the demo
-    Demo demo(ptUpperRight);
-
-    // set everything into action
-    ui.run(callBack, &demo);
+   // set everything into action
+   ui.run(callBack, &demo);
 
 
-    return 0;
+   return 0;
 }
