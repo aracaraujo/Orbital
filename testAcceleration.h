@@ -181,7 +181,7 @@ private:
 
         // Verify
         assert(closeEnough(0.1587, a.verticalAcceleration, tolerance));
-        assert(closeEnough(0.1587, a.horizontalAcceleration, tolerance));
+        assert(closeEnough(0.0, a.horizontalAcceleration, tolerance));
 
         // Teardown
     }
@@ -201,7 +201,7 @@ private:
 
         // Verify
         assert(closeEnough(8.4929, a.verticalAcceleration, tolerance));
-        assert(closeEnough(4.9034, a.horizontalAcceleration, tolerance));
+        assert(closeEnough(0.0, a.horizontalAcceleration, tolerance));
 
         // Teardown
     }
@@ -240,7 +240,7 @@ private:
         a.calcHorizontalAccelerationFromGravity(gravity, angle);
 
         // Verify
-        assert(closeEnough(0.1943, a.verticalAcceleration, tolerance));
+        assert(closeEnough(0.0, a.verticalAcceleration, tolerance));
         assert(closeEnough(-0.1122, a.horizontalAcceleration, tolerance));
 
         // Teardown
@@ -260,7 +260,7 @@ private:
         a.calcHorizontalAccelerationFromGravity(gravity, angle);
 
         // Verify
-        assert(closeEnough(9.8067, a.verticalAcceleration, tolerance));
+        assert(closeEnough(0.0, a.verticalAcceleration, tolerance));
         assert(closeEnough(0.0, a.horizontalAcceleration, tolerance));
 
         // Teardown

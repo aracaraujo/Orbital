@@ -16,6 +16,8 @@ public:
 
     // Non-Default Constructor.
     Acceleration(double gravity, double angle) {
+        /*this->verticalAcceleration = */calcVerticalAccelerationFromGravity(gravity, angle);
+        /*this->horizontalAcceleration = */calcHorizontalAccelerationFromGravity(gravity, angle);
     }
 
     // GETTERS
