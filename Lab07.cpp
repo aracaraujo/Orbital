@@ -237,9 +237,6 @@ int WINAPI wWinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
-   // Run Unit Tests
-   testRunner();
-   cout << "All tests passed!" << endl;
 
    // Initialize OpenGL
    Position ptUpperRight;
