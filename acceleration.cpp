@@ -31,14 +31,14 @@ void Acceleration::setHorizontalAcceleration(double horizontalAcceleration) {
  * VERTICAL ACCELERATION FROM TOTAL GRAVITY
  * Calculates the vertical acceleration from total acceleration at the given angle.
  *************************/
-void Acceleration::calcVerticalAccelerationFromGravity(double gravity, double angle) {
-    this->verticalAcceleration = gravity * cos(angle);
+void Acceleration::calcVerticalAccelerationFromGravity(double gravity, const Angle& angle) {
+    this->verticalAcceleration = gravity * cos(angle.getRadians());
 }
 
 /*************************
  * HORIZONTAL ACCELERATION FROM TOTAL GRAVITY
  * Calculates the horizontal acceleration from total acceleration at the given angle.
  *************************/
-void Acceleration::calcHorizontalAccelerationFromGravity(double gravity, double angle) {
-    this->horizontalAcceleration = gravity * sin(angle);
+void Acceleration::calcHorizontalAccelerationFromGravity(double gravity, const Angle& angle) {
+    this->horizontalAcceleration = gravity * sin(angle.getRadians());
 }

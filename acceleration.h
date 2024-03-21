@@ -6,6 +6,7 @@
 #define ORBITAL_ACCELERATION_H
 
 #include "position.h"
+#include "angle.h"
 class TestAcceleration;
 class Acceleration {
 public:
@@ -15,7 +16,7 @@ public:
     Acceleration() : verticalAcceleration(0.0), horizontalAcceleration(0.0) {}
 
     // Non-Default Constructor.
-    Acceleration(double gravity, double angle) {
+    Acceleration(double gravity, const Angle& angle) {
         /*this->verticalAcceleration = */calcVerticalAccelerationFromGravity(gravity, angle);
         /*this->horizontalAcceleration = */calcHorizontalAccelerationFromGravity(gravity, angle);
     }
@@ -29,10 +30,10 @@ public:
     void setHorizontalAcceleration(double horizontalAcceleration);
 
     // Vertical acceleration from total gravity.
-    void calcVerticalAccelerationFromGravity(double gravity, double angle);
+    void calcVerticalAccelerationFromGravity(double gravity, const Angle& angle);
 
     // Horizontal acceleration from total gravity.
-    void calcHorizontalAccelerationFromGravity(double gravity, double angle);
+    void calcHorizontalAccelerationFromGravity(double gravity, const Angle& angle);
 
 private:
     double verticalAcceleration;

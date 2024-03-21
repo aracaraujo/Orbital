@@ -18,6 +18,7 @@
 #include "test.h"       // for unit test
 #include <vector>
 #include "cmath"
+#include "physics.h"    // All the physics functions
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -63,7 +64,7 @@ public:
     vector<Position> createStars(){
         vector<Position> stars;
 
-        while(stars.size() < 50){
+        while(stars.size() < 200){
             Position star;
             star.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5,0.5));
             star.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5,0.5));
@@ -73,19 +74,19 @@ public:
         return stars;
     }
 
-    double earthRotation(){
+//    double earthRotation(){
+//
+//       return -(2 * M_PI/ 30 ) * (1440.0/86400.0);
+//   }
 
-       return -(2 * M_PI/ 30 ) * (1440.0/86400.0);
-   }
+//   double getGravity(double height){
+//       return GRAVITY * ((RADIUS/(RADIUS + height)) * (RADIUS/(RADIUS + height)));
+//   }
 
-   double getGravity(double height){
-       return GRAVITY * ((RADIUS/(RADIUS + height)) * (RADIUS/(RADIUS + height)));
-   }
-
-   double distanceFromEarth(Position satellite){
-       double distances = (satellite.getMetersX() * satellite.getMetersX()) + (satellite.getMetersY() * satellite.getMetersY());
-       return sqrt((distances-RADIUS));
-   }
+//   double distanceFromEarth(Position satellite){
+//       double distances = (satellite.getMetersX() * satellite.getMetersX()) + (satellite.getMetersY() * satellite.getMetersY());
+//       return sqrt((distances-RADIUS));
+//   }
 
    double directionGravityPull(Position satellite){
        return atan2(0-satellite.getMetersX(),0-satellite.getMetersY());
@@ -157,16 +158,16 @@ void callBack(const Interface* pUI, void* p)
    //
 
    // rotate the earth
-   pDemo->angleEarth += pDemo->earthRotation();
+   pDemo->angleEarth += earthRotation();
 
    pDemo->phaseStar++;
 
-   double height = pDemo->distanceFromEarth(pDemo->ptGPS);
-   double gravity = pDemo->getGravity(height);
+//   double height = getAltitude(pDemo->ptGPS);
+   Acceleration gravity = getGravity(pDemo->ptGPS);
    pDemo->angleShip += 0.01;
 
-   double horizontalAcceleration = pDemo->horizontalAcceleration(gravity,pDemo->ptGPS);
-   double verticalAcceleration = pDemo->verticalAcceleration(gravity,pDemo->ptGPS);
+   double horizontalAcceleration = gravity.getHorizontalAcceleration();
+   double verticalAcceleration = gravity.getVerticalAcceleration();
 
    pDemo->ptGPSVelocityX = pDemo->velocityFromAcceleration(pDemo->ptGPSVelocityX,horizontalAcceleration,48);
    pDemo->ptGPSVelocityY = pDemo->velocityFromAcceleration(pDemo->ptGPSVelocityY,verticalAcceleration,48);
