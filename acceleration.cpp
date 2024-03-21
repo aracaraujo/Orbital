@@ -8,11 +8,11 @@
 /*************************
  * GETTERS
  *************************/
-double Acceleration::getVerticalAcceleration() {
+double Acceleration::getVerticalAcceleration() const {
     return this->verticalAcceleration;
 }
 
-double Acceleration::getHorizontalAcceleration() {
+double Acceleration::getHorizontalAcceleration() const {
     return this->horizontalAcceleration;
 }
 

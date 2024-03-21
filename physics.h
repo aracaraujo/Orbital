@@ -5,6 +5,7 @@
 #include "cmath"
 #include "position.h"
 #include "acceleration.h"
+#include "velocity.h"
 #include "angle.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
@@ -60,6 +61,16 @@ Acceleration getGravity(const Position& position){
     Angle direction = directionGravityPull(position);
 
     return Acceleration(gravity,direction);
+}
+
+/*
+ * UPDATE POSITION
+ * It will update a position from a given velocity and acceleration
+ */
+Position& updatePosition(Position& pos, const Velocity& vel, const Acceleration& acc, double time){
+    pos.addMetersX(vel.getHorizontalVelocity() * time + 0.5 * acc.getHorizontalAcceleration() * time * time);
+    pos.addMetersY(vel.getVerticalVelocity() * time + 0.5 * acc.getVerticalAcceleration() * time * time);
+    return pos;
 }
 
 

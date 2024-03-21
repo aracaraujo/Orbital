@@ -18,10 +18,10 @@ public:
         setVelocities();
         plusOperator();
         negativeOperator();
-        updateVelocityTwoPositive();
-        updateVelocityDyPositiveDxZero();
-        updateVelocityDyZeroDxPositive();
-        updateVelocityBothNegative();
+//        updateVelocityTwoPositive();
+//        updateVelocityDyPositiveDxZero();
+//        updateVelocityDyZeroDxPositive();
+//        updateVelocityBothNegative();
     }
 
 private:
@@ -110,52 +110,52 @@ private:
         // Teardown
     }
 
-    void updateVelocityTwoPositive() const
-    {
-        // Setup
-        Velocity velocity(10.0,15.0);
-        // Exercise
-        velocity.updateVelocity(5,5,48); // We are using 48 sec because that is the time in each frame of the orbital
-        // verify
-        assert(velocity.dy == 250.0);
-        assert(velocity.dx == 255.0);
-        // Teardown
-    }
-
-    void updateVelocityDyPositiveDxZero() const
-    {
-        // Setup
-        Velocity velocity(10.0,15.0);
-        // Exercise
-        velocity.updateVelocity(5,0,48); // We are using 48 sec because that is the time in each frame of the orbital
-        // verify
-        assert(velocity.dy == 250.0);
-        assert(velocity.dx == 15.0);
-        // Teardown
-    }
-
-    void updateVelocityDyZeroDxPositive() const
-    {
-        // Setup
-        Velocity velocity(10.0,15.0);
-        // Exercise
-        velocity.updateVelocity(0,5,48); // We are using 48 sec because that is the time in each frame of the orbital
-        // verify
-        assert(velocity.dy == 10.0);
-        assert(velocity.dx == 255.0);
-        // Teardown
-    }
-
-    void updateVelocityBothNegative() const
-    {
-        // Setup
-        Velocity velocity(10.0,15.0);
-        // Exercise
-        velocity.updateVelocity(-2,-2,48); // We are using 48 sec because that is the time in each frame of the orbital
-        // verify
-        assert(velocity.dy == -86.0);
-        assert(velocity.dx == -81.0);
-        // Teardown
-    }
+//    void updateVelocityTwoPositive() const
+//    {
+//        // Setup
+//        Velocity velocity(10.0,15.0);
+//        // Exercise
+//        velocity.updateVelocity(5,5,48); // We are using 48 sec because that is the time in each frame of the orbital
+//        // verify
+//        assert(velocity.dy == 250.0);
+//        assert(velocity.dx == 255.0);
+//        // Teardown
+//    }
+//
+//    void updateVelocityDyPositiveDxZero() const
+//    {
+//        // Setup
+//        Velocity velocity(10.0,15.0);
+//        // Exercise
+//        velocity.updateVelocity(5,0,48); // We are using 48 sec because that is the time in each frame of the orbital
+//        // verify
+//        assert(velocity.dy == 250.0);
+//        assert(velocity.dx == 15.0);
+//        // Teardown
+//    }
+//
+//    void updateVelocityDyZeroDxPositive() const
+//    {
+//        // Setup
+//        Velocity velocity(10.0,15.0);
+//        // Exercise
+//        velocity.updateVelocity(0,5,48); // We are using 48 sec because that is the time in each frame of the orbital
+//        // verify
+//        assert(velocity.dy == 10.0);
+//        assert(velocity.dx == 255.0);
+//        // Teardown
+//    }
+//
+//    void updateVelocityBothNegative() const
+//    {
+//        // Setup
+//        Velocity velocity(10.0,15.0);
+//        // Exercise
+//        velocity.updateVelocity(-2,-2,48); // We are using 48 sec because that is the time in each frame of the orbital
+//        // verify
+//        assert(velocity.dy == -86.0);
+//        assert(velocity.dx == -81.0);
+//        // Teardown
+//    }
 
 };

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "acceleration.h"
+
 class TestVelocity;
 
 class Velocity{
@@ -28,8 +30,8 @@ public:
         return *this;
     }
     // Getters
-    double getVerticalVelocity() {return this->dy;};
-    double getHorizontalVelocity() {return this->dx;};
+    double getVerticalVelocity() const {return this->dy;};
+    double getHorizontalVelocity() const {return this->dx;};
 
     // Setters
     void setVerticalVelocity(double dy)
@@ -41,7 +43,7 @@ public:
         this->dx = dx;
     };
 
-    void updateVelocity(double ddy, double ddx, double time);
+    void updateVelocity(const Acceleration& acceleration, double time);
 
 private:
     double dy; // vertical
