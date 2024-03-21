@@ -57,11 +57,12 @@ public:
       angleEarth = 0.0;
       phaseStar = 0;
 
-      ptGPSVelocityX = -3100.0;
-      ptGPSVelocityY = 0;
+      ptGPSVelocity.setVerticalVelocity(0);
+      ptGPSVelocity.setHorizontalVelocity(-3100.0);
+
    }
 
-    vector<Position> createStars(){
+    vector<Position> createStars() const{
         vector<Position> stars;
 
         while(stars.size() < 200){
@@ -74,40 +75,6 @@ public:
         return stars;
     }
 
-//    double earthRotation(){
-//
-//       return -(2 * M_PI/ 30 ) * (1440.0/86400.0);
-//   }
-
-//   double getGravity(double height){
-//       return GRAVITY * ((RADIUS/(RADIUS + height)) * (RADIUS/(RADIUS + height)));
-//   }
-
-//   double distanceFromEarth(Position satellite){
-//       double distances = (satellite.getMetersX() * satellite.getMetersX()) + (satellite.getMetersY() * satellite.getMetersY());
-//       return sqrt((distances-RADIUS));
-//   }
-
-   double directionGravityPull(Position satellite){
-       return atan2(0-satellite.getMetersX(),0-satellite.getMetersY());
-   }
-
-   double horizontalAcceleration(double acceleration, Position satellite){
-       return acceleration * sin(directionGravityPull(satellite));
-   }
-
-    double verticalAcceleration(double acceleration, Position satellite){
-        return acceleration * cos(directionGravityPull(satellite));
-    }
-
-    double velocityFromAcceleration(double initialVelocity, double acceleration, double time){
-       return initialVelocity + (acceleration * time);
-   }
-
-   double calculateDistance(double initialDistance, double velocity, double time, double acceleration){
-       return initialDistance + (velocity * time) + ((acceleration * (time*time))/2);
-   }
-
    Position ptHubble;
    Position ptSputnik;
    Position ptStarlink;
@@ -116,8 +83,7 @@ public:
    Position ptGPS;
    vector<Position> ptStar;
    Position ptUpperRight;
-   double ptGPSVelocityX;
-   double ptGPSVelocityY;
+   Velocity ptGPSVelocity;
 
    unsigned char phaseStar;
 
@@ -166,14 +132,9 @@ void callBack(const Interface* pUI, void* p)
    Acceleration gravity = getGravity(pDemo->ptGPS);
    pDemo->angleShip += 0.01;
 
-   double horizontalAcceleration = gravity.getHorizontalAcceleration();
-   double verticalAcceleration = gravity.getVerticalAcceleration();
+   pDemo->ptGPSVelocity.updateVelocity(gravity, 48);
 
-   pDemo->ptGPSVelocityX = pDemo->velocityFromAcceleration(pDemo->ptGPSVelocityX,horizontalAcceleration,48);
-   pDemo->ptGPSVelocityY = pDemo->velocityFromAcceleration(pDemo->ptGPSVelocityY,verticalAcceleration,48);
-
-   pDemo->ptGPS.setMetersX(pDemo->calculateDistance(pDemo->ptGPS.getMetersX(),pDemo->ptGPSVelocityX,48,horizontalAcceleration));
-   pDemo->ptGPS.setMetersY(pDemo->calculateDistance(pDemo->ptGPS.getMetersY(),pDemo->ptGPSVelocityY,48,verticalAcceleration));
+   updatePosition(pDemo->ptGPS,pDemo->ptGPSVelocity,gravity,48);
 
    //
    // draw everything

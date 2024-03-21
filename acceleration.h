@@ -22,8 +22,8 @@ public:
     }
 
     // GETTERS
-    double getVerticalAcceleration();
-    double getHorizontalAcceleration();
+    double getVerticalAcceleration() const;
+    double getHorizontalAcceleration() const;
 
     // SETTERS
     void setVerticalAcceleration(double verticalAcceleration);

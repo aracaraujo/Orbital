@@ -4,9 +4,9 @@
 
 #include "velocity.h"
 
-void Velocity::updateVelocity(double ddy, double ddx, double time) {
+void Velocity::updateVelocity(const Acceleration& acceleration, double time) {
     // Updating the vertical velocity.
-    dy = dy + (ddy * time);
+    dy = dy + ( acceleration.getVerticalAcceleration() * time);
     // Updating the horizontal velocity.
-    dx = dx + (ddx * time);
+    dx = dx + ( acceleration.getHorizontalAcceleration() * time);
 };
