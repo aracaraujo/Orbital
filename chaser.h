@@ -23,7 +23,7 @@ public:
         this->angle+=radians;
     }
 
-    void setLocation(double x, double y){
+    void setLocationInPixels(double x, double y){
         this->position.setPixelsX(x);
         this->position.setPixelsY(y);
     }
