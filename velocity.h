@@ -14,7 +14,7 @@ public:
 
     // Constructors
     Velocity() : dy(0.0), dx(0.0) {};
-    Velocity(double dy, double dx) : dy(dy), dx(dx) {};
+    Velocity(double dx, double dy) : dx(dx), dy(dy) {};
 
     // Operators overload
     Velocity& operator+=(const Velocity & rhs)

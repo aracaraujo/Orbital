@@ -5,23 +5,23 @@
 #include "component.h"
 
 Position Component::getPosition() {
-    return Position();
+    return position;
 }
 
 Acceleration Component::getAcceleration() {
-    return Acceleration();
+    return acceleration;
 }
 
 Velocity Component::getVelocity() {
-    return Velocity();
+    return velocity;
 }
 
 Angle Component::getAngle() {
-    return Angle();
+    return angle;
 }
 
 double Component::getRadius() {
-    return 0;
+    return radius;
 }
 
 void Component::setPosition(Position position) {
@@ -42,14 +42,6 @@ void Component::setAngle(Angle angle) {
 
 void Component::setRadius(double radius) {
     this->radius = radius;
-}
-
-void Component::display(ogstream gout, double radius) {
-
-}
-
-void Component::move() {
-
 }
 
 

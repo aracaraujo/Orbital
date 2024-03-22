@@ -14,7 +14,15 @@
 class Component {
 public:
     // Default Constructor
-    Component() {}
+    Component() {};
+
+    // Non-default constructor
+    Component(Position pos, Acceleration acc, Velocity vel, Angle angle, double radius) :
+            position(pos),
+            acceleration(acc),
+            velocity(vel),
+            angle(angle),
+            radius(radius){};
 
     // GETTERS
     Position getPosition();
@@ -31,10 +39,10 @@ public:
     void setRadius(double radius);
 
     // Display
-    virtual void display(ogstream gout, double radius);
+    virtual void display(ogstream * gout)    const = 0;
 
     // Move
-    virtual void move();
+    virtual void move()                     const = 0;
 
 protected:
     Position position;
