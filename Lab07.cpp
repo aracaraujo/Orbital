@@ -19,6 +19,7 @@
 #include <vector>
 #include "cmath"
 #include "physics.h"    // All the physics functions
+#include "chaser.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -31,7 +32,8 @@ class Demo
 {
 public:
    Demo(Position ptUpperRight) :
-      ptUpperRight(ptUpperRight)
+      ptUpperRight(ptUpperRight),
+      ship(Position(),Acceleration(),Velocity(),Angle(),0.0)
    {
       ptHubble.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
       ptHubble.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
@@ -45,8 +47,7 @@ public:
       ptCrewDragon.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
       ptCrewDragon.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
 
-      ptShip.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptShip.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
+      ship.setLocation(-450,450);
 
       ptGPS.setPixelsX(0);
       ptGPS.setPixelsY(330);
@@ -79,7 +80,7 @@ public:
    Position ptSputnik;
    Position ptStarlink;
    Position ptCrewDragon;
-   Position ptShip;
+   Chaser ship;
    Position ptGPS;
    vector<Position> ptStar;
    Position ptUpperRight;
@@ -109,14 +110,14 @@ void callBack(const Interface* pUI, void* p)
    //
 
    // move by a little
-   if (pUI->isUp())
-      pDemo->ptShip.addPixelsY(1.0);
-   if (pUI->isDown())
-      pDemo->ptShip.addPixelsY(-1.0);
-   if (pUI->isLeft())
-      pDemo->ptShip.addPixelsX(-1.0);
-   if (pUI->isRight())
-      pDemo->ptShip.addPixelsX(1.0);
+//   if (pUI->isUp())
+//      pDemo->ptShip.addPixelsY(1.0);
+//   if (pUI->isDown())
+//      pDemo->ptShip.addPixelsY(-1.0);
+//   if (pUI->isLeft())
+//      pDemo->ptShip.addPixelsX(-1.0);
+//   if (pUI->isRight())
+//      pDemo->ptShip.addPixelsX(1.0);
 
 
    //
@@ -141,7 +142,7 @@ void callBack(const Interface* pUI, void* p)
    //
 
    Position pt;
-   ogstream gout(pt);
+   ogstream * gout =new ogstream(pt);
 
    // draw satellites
 //   gout.drawCrewDragon(pDemo->ptCrewDragon, pDemo->angleShip);
@@ -149,7 +150,7 @@ void callBack(const Interface* pUI, void* p)
 //   gout.drawSputnik   (pDemo->ptSputnik,    pDemo->angleShip);
 //   gout.drawStarlink  (pDemo->ptStarlink,   pDemo->angleShip);
 //   gout.drawShip      (pDemo->ptShip,       pDemo->angleShip, pUI->isSpace());
-   gout.drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
+   gout->drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
 
 //    draw parts
 //   pt.setPixelsX(pDemo->ptCrewDragon.getPixelsX() + 20);
@@ -175,12 +176,13 @@ void callBack(const Interface* pUI, void* p)
 
    // draw a single star
    for (Position star : pDemo->ptStar){
-       gout.drawStar(star, pDemo->phaseStar);
+       gout->drawStar(star, pDemo->phaseStar);
    }
 
    // draw the earth
    pt.setMeters(0.0, 0.0);
-   gout.drawEarth(pt, pDemo->angleEarth);
+   gout->drawEarth(pt, pDemo->angleEarth);
+   pDemo->ship.display(gout);
 }
 
 double Position::metersFromPixels = 40.0;
