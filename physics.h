@@ -2,6 +2,7 @@
 // Created by Ara Cantanhede Araujo on 3/20/24.
 //
 
+#pragma once
 #include "cmath"
 #include "position.h"
 #include "acceleration.h"
@@ -22,7 +23,7 @@ using namespace std;
  *  radians of how much the earth will rotate each frame.
  *  It can be easily adapted in case the frame rate changes.
  */
-double earthRotation(){
+static double earthRotation(){
     return -(2 * M_PI/ FRAMERATE ) * (DILATION/SECONDSPERDAY);
 }
 
@@ -31,7 +32,7 @@ double earthRotation(){
  * This function will return the altitude from a given position
  * in relation to the earth.
  */
-double getAltitude(const Position& position){
+static double getAltitude(const Position& position){
     double distances = (position.getMetersX() * position.getMetersX()) + (position.getMetersY() * position.getMetersY());
     return sqrt((distances-RADIUS));
 }
@@ -42,7 +43,7 @@ double getAltitude(const Position& position){
  * a give object. It only needs the objects position to perform the
  * calculations.
  */
-Angle directionGravityPull(const Position& position){
+static Angle directionGravityPull(const Position& position){
 
     return Angle(atan2(-position.getMetersX(),-position.getMetersY()));
 }
@@ -52,7 +53,7 @@ Angle directionGravityPull(const Position& position){
  * This function will return and acceleration value that is
  * the value of gravity to a given altitude from the earth.
  */
-Acceleration getGravity(const Position& position){
+static Acceleration getGravity(const Position& position){
 
     double height = getAltitude(position);
 
@@ -67,7 +68,7 @@ Acceleration getGravity(const Position& position){
  * UPDATE POSITION
  * It will update a position from a given velocity and acceleration
  */
-Position& updatePosition(Position& pos, const Velocity& vel, const Acceleration& acc, double time){
+static Position& updatePosition(Position& pos, const Velocity& vel, const Acceleration& acc, double time){
     pos.addMetersX(vel.getHorizontalVelocity() * time + 0.5 * acc.getHorizontalAcceleration() * time * time);
     pos.addMetersY(vel.getVerticalVelocity() * time + 0.5 * acc.getVerticalAcceleration() * time * time);
     return pos;

@@ -4,7 +4,7 @@
 
 #ifndef ORBITAL_ACCELERATION_H
 #define ORBITAL_ACCELERATION_H
-
+#pragma once
 #include "position.h"
 #include "angle.h"
 class TestAcceleration;
@@ -19,6 +19,14 @@ public:
     Acceleration(double gravity, const Angle& angle) {
         /*this->verticalAcceleration = */calcVerticalAccelerationFromGravity(gravity, angle);
         /*this->horizontalAcceleration = */calcHorizontalAccelerationFromGravity(gravity, angle);
+    }
+
+    // Operators
+    Acceleration & operator=(const Acceleration & rhs)
+    {
+        horizontalAcceleration = rhs.horizontalAcceleration;
+        verticalAcceleration = rhs.verticalAcceleration;
+        return *this;
     }
 
     // GETTERS

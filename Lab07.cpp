@@ -11,14 +11,11 @@
  *      ??
  *****************************************************************/
 
-#include <cassert>      // for ASSERT
 #include "uiInteract.h" // for INTERFACE
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "position.h"      // for POINT
-#include "test.h"       // for unit test
 #include <vector>
 #include "cmath"
-#include "physics.h"    // All the physics functions
 #include "chaser.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
@@ -33,34 +30,15 @@ class Demo
 public:
    Demo(Position ptUpperRight) :
       ptUpperRight(ptUpperRight),
-      ship(Position(-18000,18000),Acceleration(),Velocity(),Angle(),10.0),
+      ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
       gout(new ogstream(Position()))
    {
-      ptHubble.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptHubble.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptSputnik.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptSputnik.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptStarlink.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptStarlink.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptCrewDragon.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptCrewDragon.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
       ship.setLocationInPixels(-450,450);
-
-      ptGPS.setPixelsX(0);
-      ptGPS.setPixelsY(330);
 
       ptStar = createStars();
 
-      angleShip = 0.0;
       angleEarth = 0.0;
       phaseStar = 0;
-
-      ptGPSVelocity.setVerticalVelocity(0);
-      ptGPSVelocity.setHorizontalVelocity(-3100.0);
 
    }
 
@@ -71,26 +49,18 @@ public:
             Position star;
             star.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5,0.5));
             star.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5,0.5));
-            // Checking that the position is not on the ground.
             stars.push_back(star);
         }
         return stars;
     }
 
-   Position ptHubble;
-   Position ptSputnik;
-   Position ptStarlink;
-   Position ptCrewDragon;
    Chaser ship;
-   Position ptGPS;
    vector<Position> ptStar;
    Position ptUpperRight;
-   Velocity ptGPSVelocity;
    ogstream * gout;
 
    unsigned char phaseStar;
 
-   double angleShip;
    double angleEarth;
 };
 
@@ -107,20 +77,20 @@ void callBack(const Interface* pUI, void* p)
    // is the first step of every single callback function in OpenGL. 
    Demo* pDemo = (Demo*)p;
 
-   //
    // accept input
-   //
-
-   // move by a little
-//   if (pUI->isUp())
-//      pDemo->ptShip.addPixelsY(1.0);
-//   if (pUI->isDown())
-//      pDemo->ptShip.addPixelsY(-1.0);
+   pDemo->ship.setIsSpacePress(false);
+   if (pUI->isDown()){
+       pDemo->ship.setIsSpacePress(true);
+       pDemo->ship.thrust(2.0);
+   }
    if (pUI->isLeft())
-      pDemo->ship.rotate(-0.1);
+   {
+       pDemo->ship.rotate(-0.1);
+   }
    if (pUI->isRight())
+   {
        pDemo->ship.rotate(0.1);
-
+   }
 
    //
    // perform all the game logic
@@ -129,52 +99,11 @@ void callBack(const Interface* pUI, void* p)
    // rotate the earth
    pDemo->angleEarth += earthRotation();
 
-   pDemo->phaseStar++;
+   pDemo->ship.move();
 
-//   double height = getAltitude(pDemo->ptGPS);
-   Acceleration gravity = getGravity(pDemo->ptGPS);
-   pDemo->angleShip += 0.01;
-
-   pDemo->ptGPSVelocity.updateVelocity(gravity, 48);
-
-   updatePosition(pDemo->ptGPS,pDemo->ptGPSVelocity,gravity,48);
-
-   //
    // draw everything
-   //
-
    Position pt;
-//   ogstream * gout =new ogstream(pt);
-
-   // draw satellites
-//   gout.drawCrewDragon(pDemo->ptCrewDragon, pDemo->angleShip);
-//   gout.drawHubble    (pDemo->ptHubble,     pDemo->angleShip);
-//   gout.drawSputnik   (pDemo->ptSputnik,    pDemo->angleShip);
-//   gout.drawStarlink  (pDemo->ptStarlink,   pDemo->angleShip);
-//   gout.drawShip      (pDemo->ptShip,       pDemo->angleShip, pUI->isSpace());
-   pDemo->gout->drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
-
-//    draw parts
-//   pt.setPixelsX(pDemo->ptCrewDragon.getPixelsX() + 20);
-//   pt.setPixelsY(pDemo->ptCrewDragon.getPixelsY() + 20);
-//   gout.drawCrewDragonRight(pt, pDemo->angleShip); // notice only two parameters are set
-//   pt.setPixelsX(pDemo->ptHubble.getPixelsX() + 20);
-//   pt.setPixelsY(pDemo->ptHubble.getPixelsY() + 20);
-//   gout.drawHubbleLeft(pt, pDemo->angleShip);      // notice only two parameters are set
-//   pt.setPixelsX(pDemo->ptGPS.getPixelsX() + 20); *
-//   pt.setPixelsY(pDemo->ptGPS.getPixelsY() + 20); *
-//   gout.drawGPSCenter(pt, pDemo->angleShip);       // notice only two parameters are set
-//   pt.setPixelsX(pDemo->ptStarlink.getPixelsX() + 20);
-//   pt.setPixelsY(pDemo->ptStarlink.getPixelsY() + 20);
-//   gout.drawStarlinkArray(pt, pDemo->angleShip);   // notice only two parameters are set
-
-   // draw fragments
-//   pt.setPixelsX(pDemo->ptSputnik.getPixelsX() + 20);
-//   pt.setPixelsY(pDemo->ptSputnik.getPixelsY() + 20);
-//   gout.drawFragment(pt, pDemo->angleShip);
-//   pt.setPixelsX(pDemo->ptShip.getPixelsX() + 20);
-//   pt.setPixelsY(pDemo->ptShip.getPixelsY() + 20);
-//   gout.drawFragment(pt, pDemo->angleShip);
+   pDemo->phaseStar++;
 
    // draw a single star
    for (Position star : pDemo->ptStar){
