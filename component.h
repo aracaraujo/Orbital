@@ -42,7 +42,7 @@ public:
     virtual void display(ogstream * gout)    const = 0;
 
     // Move
-    virtual void move()                     const = 0;
+    virtual void move();
 
 protected:
     Position position;

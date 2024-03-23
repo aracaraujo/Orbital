@@ -8,6 +8,8 @@
 #pragma once
 #include "component.h"
 #include "angle.h"
+#include "physics.h"
+#include "acceleration.h"
 
 class Chaser : Component{
 
@@ -16,9 +18,11 @@ public:
     Chaser() { isSpacePress = false; };
 
     // Non-default constructor
-    Chaser(Position pos, Acceleration acc, Velocity vel, Angle angle, double radius) : Component(pos,acc, vel, angle, radius) {};
+    Chaser(Position pos, Acceleration acc, Velocity vel, Angle angle, double radius) : Component(pos,acc, vel, angle, radius) {
+        isSpacePress = false;
+    };
 
-    //+ rotate( Radians: double)
+    // Rotate
     void rotate(double radians) {
         this->angle+=radians;
     }
@@ -28,18 +32,22 @@ public:
         this->position.setPixelsY(y);
     }
 
-    //+ thrust()
-//    void thrust()
-    //+ shoot( ) : Bullet
+    // Thrust
+    void thrust(double acceleration);
+
+    // Shoot
 
     // Virtual methods
-    virtual void display(ogstream* gout) const override{
-        gout->drawShip(this->position,this->angle.getRadians(),false);
+    void display(ogstream* gout) const override{
+        gout->drawShip(this->position,this->angle.getRadians(),isSpacePress);
     }
 
-    virtual void move() const override{
+   void move() override;
 
-    }
+    bool getIsSpacePress() const{ return isSpacePress; };
+
+    void setIsSpacePress(bool pressed) { this->isSpacePress = pressed; };
+
 private:
     bool isSpacePress;
 };

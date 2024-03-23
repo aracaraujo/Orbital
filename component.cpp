@@ -44,4 +44,8 @@ void Component::setRadius(double radius) {
     this->radius = radius;
 }
 
+void Component::move() {
+
+}
+
 
