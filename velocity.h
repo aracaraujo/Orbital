@@ -5,6 +5,7 @@
 #pragma once
 
 #include "acceleration.h"
+#include "angle.h"
 
 class TestVelocity;
 
@@ -14,6 +15,7 @@ public:
 
     // Constructors
     Velocity() : dy(0.0), dx(0.0) {};
+    Velocity(double velocity, const Angle& angle);
     Velocity(double dx, double dy) : dx(dx), dy(dy) {};
 
     // Operators overload
@@ -49,3 +51,5 @@ private:
     double dy; // vertical
     double dx; // horizontal
 };
+
+std::ostream & operator << (std::ostream & out, const Velocity& vel);

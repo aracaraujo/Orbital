@@ -17,6 +17,7 @@
 #include <vector>
 #include "cmath"
 #include "chaser.h"
+#include "projectile.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -58,6 +59,7 @@ public:
    vector<Position> ptStar;
    Position ptUpperRight;
    ogstream * gout;
+   vector<Projectile> projectiles;
 
    unsigned char phaseStar;
 
@@ -91,6 +93,11 @@ void callBack(const Interface* pUI, void* p)
    {
        pDemo->ship.rotate(0.1);
    }
+   if (pUI->isSpace())
+   {
+       if(pDemo->projectiles.size() < 5)
+           pDemo->projectiles.push_back(pDemo->ship.shoot());
+   }
 
    //
    // perform all the game logic
@@ -101,14 +108,39 @@ void callBack(const Interface* pUI, void* p)
 
    pDemo->ship.move();
 
+   for(Projectile & projectile : pDemo->projectiles)
+   {
+       projectile.move();
+   }
+
    // draw everything
    Position pt;
    pDemo->phaseStar++;
 
    // draw a single star
-   for (Position star : pDemo->ptStar){
+   for (const Position& star : pDemo->ptStar){
        pDemo->gout->drawStar(star, pDemo->phaseStar);
    }
+
+//    draw projectiles and increment age
+   if (!pDemo->projectiles.empty()){
+       vector<int> removeIndexes;
+       for (int i = 0; i < pDemo->projectiles.size(); i++){
+           if (pDemo->projectiles[i].getAge() == 70){
+               removeIndexes.push_back(i);
+           }else
+           {
+               pDemo->projectiles[i].display(pDemo->gout);
+               pDemo->projectiles[i].incrementAge();
+           }
+       }
+       auto it = pDemo->projectiles.begin();
+       for(int index : removeIndexes){
+           pDemo->projectiles.erase(it+index);
+       }
+       removeIndexes.clear();
+   }
+
 
    // draw the earth
    pt.setMeters(0.0, 0.0);

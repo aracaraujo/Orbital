@@ -5,7 +5,7 @@
 #include "component.h"
 
 Position Component::getPosition() {
-    return position;
+    return this->position;
 }
 
 Acceleration Component::getAcceleration() {
