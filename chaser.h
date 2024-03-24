@@ -10,6 +10,7 @@
 #include "angle.h"
 #include "physics.h"
 #include "acceleration.h"
+#include "projectile.h"
 
 class Chaser : Component{
 
@@ -36,6 +37,7 @@ public:
     void thrust(double acceleration);
 
     // Shoot
+    Projectile shoot();
 
     // Virtual methods
     void display(ogstream* gout) const override{
