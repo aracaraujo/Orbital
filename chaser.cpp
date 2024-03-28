@@ -13,7 +13,6 @@ void Chaser::move(){
 void Chaser::thrust(double acceleration) {
     Acceleration thrustAcceleration(acceleration, this->angle.getRadians());
     this->velocity.updateVelocity(thrustAcceleration,48);
-    updatePosition(this->position,this->velocity,this->acceleration,48);
 }
 
 Projectile Chaser::shoot() {

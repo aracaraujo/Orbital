@@ -22,7 +22,8 @@ public:
             acceleration(acc),
             velocity(vel),
             angle(angle),
-            radius(radius){};
+            radius(radius),
+            dead(false){};
 
     // GETTERS
     Position getPosition();
@@ -30,6 +31,7 @@ public:
     Velocity getVelocity();
     Angle getAngle();
     double getRadius();
+    bool isDead();
 
     // SETTERS
     void setPosition(Position position);
@@ -37,12 +39,13 @@ public:
     void setVelocity(Velocity velocity);
     void setAngle(Angle angle);
     void setRadius(double radius);
+    void kill();
 
     // Display
     virtual void display(ogstream * gout)    const = 0;
 
     // Move
-    virtual void move();
+    virtual void move() =0;
 
 protected:
     Position position;
@@ -50,6 +53,7 @@ protected:
     Velocity velocity;
     Angle angle;
     double radius;
+    bool dead;
 };
 
 
