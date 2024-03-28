@@ -18,6 +18,7 @@
 #include "cmath"
 #include "chaser.h"
 #include "projectile.h"
+#include "star.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -36,32 +37,76 @@ public:
    {
       ship.setLocationInPixels(-450,450);
 
-      ptStar = createStars();
+      createStars();
 
       angleEarth = 0.0;
-      phaseStar = 0;
+   }
+
+    void createStars() {
+
+        for(auto & i : stars){
+            Star star;
+            star.setLocationInPixels(ptUpperRight.getPixelsX() * random(-0.5,0.5),ptUpperRight.getPixelsX() * random(-0.5,0.5));
+            unsigned char phase = random(0,255);
+            star.setPhase(phase);
+            i = star;
+        }
+    }
+
+    void display(){
+        for (Component* comp : components) {
+            comp->display(gout);
+        }
+   }
+
+    void move(){
+
+       ship.move();
+
+       for (Component*& comp : components) {
+            comp->move();
+       }
+
+        for (auto it = components.begin(); it != components.end(); ++it){
+            // add loop to check for collision between the components
+
+            // Check collision with the earth
+            if (computeDistance(Position(0.0,0.0),(*it)->getPosition()) < ((*it)->getRadius() + RADIUS )){
+                (*it)->kill();
+                cout << "Collision with the earth" << endl;
+            }
+
+            // Check collision with the ship
+            if (computeDistance(ship.getPosition(),(*it)->getPosition()) < ((*it)->getRadius() + ship.getRadius())){
+                (*it)->kill();
+                cout << "Collision with the ship" << endl;
+            }
+        }
+
+        // Check ship collision with earth
+        // We need to decide what will happen in this situation.
+        if (computeDistance(ship.getPosition(),Position(0.0,0.0)) < (ship.getRadius() + RADIUS )){
+            ship.kill();
+            cout << "Collision with the ship" << endl;
+        }
+
+        // Removing dead components from the list.
+        for (auto it= components.begin(); it != components.end();){
+            if((*it)->isDead()){
+                delete *it;
+                it = components.erase(it);
+            }else{
+                ++it;
+            }
+        }
 
    }
 
-    vector<Position> createStars() const{
-        vector<Position> stars;
-
-        while(stars.size() < 200){
-            Position star;
-            star.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5,0.5));
-            star.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5,0.5));
-            stars.push_back(star);
-        }
-        return stars;
-    }
-
    Chaser ship;
-   vector<Position> ptStar;
+   Star stars[200];
    Position ptUpperRight;
    ogstream * gout;
-   vector<Projectile> projectiles;
-
-   unsigned char phaseStar;
+   vector<Component*> components;
 
    double angleEarth;
 };
@@ -95,8 +140,10 @@ void callBack(const Interface* pUI, void* p)
    }
    if (pUI->isSpace())
    {
-       if(pDemo->projectiles.size() < 5)
-           pDemo->projectiles.push_back(pDemo->ship.shoot());
+       if(pDemo->components.size() < 5){
+           pDemo->components.push_back(new Projectile(pDemo->ship.shoot()));
+       }
+
    }
 
    //
@@ -108,38 +155,18 @@ void callBack(const Interface* pUI, void* p)
 
    pDemo->ship.move();
 
-   for(Projectile & projectile : pDemo->projectiles)
-   {
-       projectile.move();
-   }
+   pDemo->move();
 
    // draw everything
    Position pt;
-   pDemo->phaseStar++;
 
    // draw a single star
-   for (const Position& star : pDemo->ptStar){
-       pDemo->gout->drawStar(star, pDemo->phaseStar);
+   for (Star& star : pDemo->stars){
+       star.incrementPhase();
+       pDemo->gout->drawStar(star.getPosition(), star.getPhase());
    }
 
-//    draw projectiles and increment age
-   if (!pDemo->projectiles.empty()){
-       vector<int> removeIndexes;
-       for (int i = 0; i < pDemo->projectiles.size(); i++){
-           if (pDemo->projectiles[i].getAge() == 70){
-               removeIndexes.push_back(i);
-           }else
-           {
-               pDemo->projectiles[i].display(pDemo->gout);
-               pDemo->projectiles[i].incrementAge();
-           }
-       }
-       auto it = pDemo->projectiles.begin();
-       for(int index : removeIndexes){
-           pDemo->projectiles.erase(it+index);
-       }
-       removeIndexes.clear();
-   }
+   pDemo->display();
 
 
    // draw the earth

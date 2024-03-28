@@ -24,6 +24,10 @@ double Component::getRadius() {
     return radius;
 }
 
+bool Component::isDead() {
+    return dead;
+}
+
 void Component::setPosition(Position position) {
     this->position = position;
 }
@@ -44,8 +48,8 @@ void Component::setRadius(double radius) {
     this->radius = radius;
 }
 
-void Component::move() {
-
+void Component::kill() {
+    this->dead = true;
 }
 
 

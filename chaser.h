@@ -12,7 +12,7 @@
 #include "acceleration.h"
 #include "projectile.h"
 
-class Chaser : Component{
+class Chaser : public Component{
 
 public:
     // Default constructor
