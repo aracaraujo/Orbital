@@ -2,8 +2,8 @@
 // Created by Wade Withers on 3/28/24.
 //
 
-#ifndef ORBITAL_SATTELITE_H
-#define ORBITAL_SATTELITE_H
+#ifndef ORBITAL_SATELLITE_H
+#define ORBITAL_SATELLITE_H
 
 #include "component.h"
 
@@ -494,4 +494,4 @@ public:
     void destroy(std::vector<Component*>& satellites) override;
 };
 
-#endif //ORBITAL_SATTELITE_H
+#endif //ORBITAL_SATELLITE_H

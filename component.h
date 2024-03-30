@@ -10,6 +10,7 @@
 #include "velocity.h"
 #include "angle.h"
 #include "uiDraw.h"
+#include "physics.h"
 
 class Component {
 public:
@@ -45,7 +46,7 @@ public:
     virtual void display(ogstream * gout)    const = 0;
 
     // Move
-    void move();
+    void move(int time);
 
 protected:
     Position position;

@@ -19,7 +19,7 @@
 #include "chaser.h"
 #include "projectile.h"
 #include "star.h"
-#include "sattelite.h"
+#include "satellite.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -33,12 +33,13 @@ class Demo
 public:
    Demo(Position ptUpperRight) :
       ptUpperRight(ptUpperRight),
-      gps(Position(0.0, 26560000), Acceleration(), Velocity(-3880000, 0.0), Angle(M_PI/2), 12.0),
+
       ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
-      gout(new ogstream(Position()))
+      gout(new ogstream(Position())),
+      projectiles(0)
    {
       ship.setLocationInPixels(-450,450);
-
+//       gps(Position(0.0, 26560000), Acceleration(), Velocity(-3880000, 0.0), Angle(M_PI/2), 12.0),
       createStars();
 
       angleEarth = 0.0;
@@ -63,13 +64,13 @@ public:
 
     void move(){
 
-       ship.move();
+       ship.move(48);
 
        for (Component*& comp : components) {
-            comp->move();
+           comp->move(48);
        }
 
-        for (auto it = components.begin(); it != components.end(); ++it){
+       for (auto it = components.begin(); it != components.end(); ++it){
             // add loop to check for collision between the components
 
             // Check collision with the earth
@@ -82,6 +83,17 @@ public:
             if (computeDistance(ship.getPosition(),(*it)->getPosition()) < ((*it)->getRadius() + ship.getRadius())){
                 (*it)->kill();
                 cout << "Collision with the ship" << endl;
+            }
+
+            // Check projectile's age.
+            // When it hits 70 it will kill it if not it will just increment.
+            if (Projectile* projectile = dynamic_cast<Projectile*>(*it)){
+                if(projectile->getAge() == 70){
+                    projectile->kill();
+                    decrementProjectiles();
+                }else{
+                    projectile->incrementAge();
+                }
             }
         }
 
@@ -103,14 +115,16 @@ public:
         }
 
    }
+   void incrementProjectiles() { this->projectiles++; };
 
-   Gps gps;
+   void decrementProjectiles() { this->projectiles--; };
+
    Chaser ship;
    Star stars[200];
    Position ptUpperRight;
    ogstream * gout;
    vector<Component*> components;
-
+   int projectiles;
    double angleEarth;
 };
 
@@ -143,8 +157,9 @@ void callBack(const Interface* pUI, void* p)
    }
    if (pUI->isSpace())
    {
-       if(pDemo->components.size() < 5){
+       if(pDemo->projectiles < 5){
            pDemo->components.push_back(new Projectile(pDemo->ship.shoot()));
+           pDemo->incrementProjectiles();
        }
 
    }
@@ -154,8 +169,6 @@ void callBack(const Interface* pUI, void* p)
 
    // rotate the earth
    pDemo->angleEarth += earthRotation();
-
-   pDemo->ship.move();
 
    pDemo->move();
 
@@ -175,8 +188,6 @@ void callBack(const Interface* pUI, void* p)
    pt.setMeters(0.0, 0.0);
    pDemo->gout->drawEarth(pt, pDemo->angleEarth);
    pDemo->ship.display(pDemo->gout);
-   pDemo->gps.display(pDemo->gout);
-   cout << "Satellite pos: " << pDemo->gps.getPosition().getMetersX() << ", " << pDemo->gps.getPosition().getMetersY() << endl;
 }
 
 double Position::metersFromPixels = 40.0;

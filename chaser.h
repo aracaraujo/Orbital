@@ -44,8 +44,6 @@ public:
         gout->drawShip(this->position,this->angle.getRadians(),isSpacePress);
     }
 
-   void move() override;
-
     bool getIsSpacePress() const{ return isSpacePress; };
 
     void setIsSpacePress(bool pressed) { this->isSpacePress = pressed; };

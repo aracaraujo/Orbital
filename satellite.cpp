@@ -2,7 +2,7 @@
 // Created by Wade Withers on 3/28/24.
 //
 
-#include "sattelite.h"
+#include "satellite.h"
 #include "uiDraw.h"
 #include <vector>
 #include "fragment.h"
