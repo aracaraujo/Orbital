@@ -12,7 +12,8 @@ public:
     // Constructors
     Fragment();
     Fragment(Position pos, Acceleration acc, Velocity vel, Angle angle, double radius) :
-            Component(pos, acc, vel, angle, radius){};
+            Component(pos, acc, vel, angle, radius){
+    };
 
     int getAge() const { return age; }
     void setAge(int age) { this->age = age; }
