@@ -43,6 +43,20 @@ public:
         this->radians = normalize(radians);
     }
 
+    void rotate(double amount)
+    {
+        radians += amount;
+        if(radians > M_PI)
+            radians -= 2.0 * M_PI;
+        if(radians < M_PI)
+            radians += 2.0 * M_PI;
+    }
+
+    void setDxDy(double dx, double dy)
+    {
+        radians = atan2(dx,dy);
+    }
+
     // Display
     void display(ostream & out) const
     {
@@ -58,9 +72,21 @@ public:
         return *this;
     }
 
+    Angle & operator=(double radians)
+    {
+        radians = radians;
+        return *this;
+    }
+
     Angle& operator+=(const double & rhs)
     {
         radians += rhs;
+        return *this;
+    }
+
+    Angle& operator-=(const double & rhs)
+    {
+        radians -= rhs;
         return *this;
     }
 

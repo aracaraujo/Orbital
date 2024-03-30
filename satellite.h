@@ -183,6 +183,18 @@ public:
             vel,
             angle,
             radius) {
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -210,6 +222,7 @@ public:
             vel,
             angle,
             radius) {
+
     };
 
     // Destructor

@@ -9,7 +9,7 @@
 #include "velocity.h"
 #include "angle.h"
 #define GRAVITY 9.80665  // m/s2
-#define RADIUS 6378000 // earth radius
+#define EARTHRADIUS 6378000 // earth radius
 #define FRAMERATE  30
 #define SECONDSPERDAY 86400.0
 #define DILATION 1440.0
@@ -33,8 +33,8 @@ static double earthRotation(){
  * in relation to the earth.
  */
 static double getAltitude(const Position& position){
-    double distances = (position.getMetersX() * position.getMetersX()) + (position.getMetersY() * position.getMetersY());
-    return sqrt((distances-RADIUS));
+    double distance = computeDistance(Position(),position);
+    return distance - EARTHRADIUS;
 }
 
 /*
@@ -57,9 +57,13 @@ static Acceleration getGravity(const Position& position){
 
     double height = getAltitude(position);
 
-    double gravity = GRAVITY * ((RADIUS/(RADIUS + height)) * (RADIUS/(RADIUS + height)));
+    Angle direction;
 
-    Angle direction = directionGravityPull(position);
+    direction.setDxDy(-position.getMetersX(),-position.getMetersY());
+
+    double tmp = EARTHRADIUS / (EARTHRADIUS + height);
+
+    double gravity = GRAVITY * tmp * tmp;
 
     return Acceleration(gravity,direction);
 }
@@ -70,7 +74,7 @@ static Acceleration getGravity(const Position& position){
  */
 static Position& updatePosition(Position& pos, const Velocity& vel, const Acceleration& acc, double time){
     pos.addMetersX(vel.getHorizontalVelocity() * time + 0.5 * acc.getHorizontalAcceleration() * time * time);
-    pos.addMetersY(vel.getVerticalVelocity() * time + 0.5 * acc.getVerticalAcceleration() * time * time);
+    pos.addMetersY(vel.getVerticalVelocity() * time + 0.5 * acc.getVerticalAcceleration() * time *  time);
     return pos;
 }
 

@@ -20,6 +20,7 @@
 #include "projectile.h"
 #include "star.h"
 #include "satellite.h"
+#include "fragment.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -33,15 +34,19 @@ class Demo
 public:
    Demo(Position ptUpperRight) :
       ptUpperRight(ptUpperRight),
-
       ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
       gout(new ogstream(Position())),
       projectiles(0)
    {
-      ship.setLocationInPixels(-450,450);
-//       gps(Position(0.0, 26560000), Acceleration(), Velocity(-3880000, 0.0), Angle(M_PI/2), 12.0),
+      ship.setLocationInPixels(-250,250);
       createStars();
 
+      // Adding satellites
+      components.push_back(new Sputnik(Position(-36515095.13,21082000.0),Acceleration(),Velocity(2050.0,2684.68),Angle(),4));
+      components.push_back(new Gps(Position(0.0, 26560000.0), Acceleration(), Velocity(-3880.0, 0.0), Angle(M_PI/2), 12.0));
+      components.push_back(new Hubble(Position(0.0, -42164000.0), Acceleration(), Velocity(3100.0, 0.0), Angle(M_PI/2), 10.0));
+      components.push_back(new Dragon(Position(0.0, 8000000.0), Acceleration(), Velocity(-7900.0, 0.0), Angle(M_PI/2), 7.0));
+      components.push_back(new Starlink(Position(0.0, -13020000.0), Acceleration(), Velocity(5800.0, 0.0), Angle(M_PI/2), 6.0));
       angleEarth = 0.0;
    }
 
@@ -72,17 +77,24 @@ public:
 
        for (auto it = components.begin(); it != components.end(); ++it){
             // add loop to check for collision between the components
-
+           for (auto it2 = it + 1; it2 != components.end(); ++it2){
+               if (!(*it)->isDead() && !(*it2)->isDead()){
+                   // Distance is divided by 128k, so we have the value in pixels since the radius are in pixel.
+                   if (computeDistance((*it)->getPosition(),(*it2)->getPosition())/128000 < ((*it)->getRadius() + (*it2)->getRadius() )){
+                       (*it)->kill();
+                       (*it2)->kill();
+                   }
+               }
+           }
             // Check collision with the earth
-            if (computeDistance(Position(0.0,0.0),(*it)->getPosition()) < ((*it)->getRadius() + RADIUS )){
+            if (computeDistance(Position(0.0,0.0),(*it)->getPosition()) < ((*it)->getRadius() + EARTHRADIUS )){
                 (*it)->kill();
-                cout << "Collision with the earth" << endl;
             }
 
             // Check collision with the ship
-            if (computeDistance(ship.getPosition(),(*it)->getPosition()) < ((*it)->getRadius() + ship.getRadius())){
+            // Distance is divided by 128k, so we have the value in pixels since the radius are in pixel.
+            if (computeDistance(ship.getPosition(),(*it)->getPosition())/128000 < ((*it)->getRadius() + ship.getRadius())){
                 (*it)->kill();
-                cout << "Collision with the ship" << endl;
             }
 
             // Check projectile's age.
@@ -95,11 +107,21 @@ public:
                     projectile->incrementAge();
                 }
             }
+
+           if (Fragment* fragment = dynamic_cast<Fragment*>(*it)){
+               if(fragment->getAge() == 70){
+                   fragment->kill();
+                   decrementProjectiles();
+               }else{
+                   fragment->incrementAge();
+               }
+           }
+
         }
 
         // Check ship collision with earth
         // We need to decide what will happen in this situation.
-        if (computeDistance(ship.getPosition(),Position(0.0,0.0)) < (ship.getRadius() + RADIUS )){
+        if (computeDistance(ship.getPosition(),Position(0.0,0.0)) < (ship.getRadius() + EARTHRADIUS )){
             ship.kill();
             cout << "Collision with the ship" << endl;
         }
@@ -107,6 +129,9 @@ public:
         // Removing dead components from the list.
         for (auto it= components.begin(); it != components.end();){
             if((*it)->isDead()){
+//                if (Satellite* satellite = dynamic_cast<Satellite*>(*it)){
+//                    satellite->destroy(components);
+//                }
                 delete *it;
                 it = components.erase(it);
             }else{

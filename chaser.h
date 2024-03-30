@@ -25,7 +25,7 @@ public:
 
     // Rotate
     void rotate(double radians) {
-        this->angle+=radians;
+        this->angle.rotate(radians);
     }
 
     void setLocationInPixels(double x, double y){
