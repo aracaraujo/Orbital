@@ -19,7 +19,7 @@
 #include "chaser.h"
 #include "projectile.h"
 #include "star.h"
-#include "sattelite.h"
+#include "satellite.h"
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -33,13 +33,13 @@ class Demo
 public:
    Demo(Position ptUpperRight) :
       ptUpperRight(ptUpperRight),
-      gps(Position(0.0, 26560000), Acceleration(), Velocity(-3880000, 0.0), Angle(M_PI/2), 12.0),
+
       ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
       gout(new ogstream(Position())),
       projectiles(0)
    {
       ship.setLocationInPixels(-450,450);
-
+//       gps(Position(0.0, 26560000), Acceleration(), Velocity(-3880000, 0.0), Angle(M_PI/2), 12.0),
       createStars();
 
       angleEarth = 0.0;
@@ -64,10 +64,10 @@ public:
 
     void move(){
 
-       ship.move();
+       ship.move(48);
 
        for (Component*& comp : components) {
-           comp->move();
+           comp->move(48);
        }
 
        for (auto it = components.begin(); it != components.end(); ++it){
@@ -119,7 +119,6 @@ public:
 
    void decrementProjectiles() { this->projectiles--; };
 
-   Gps gps;
    Chaser ship;
    Star stars[200];
    Position ptUpperRight;
@@ -171,8 +170,6 @@ void callBack(const Interface* pUI, void* p)
    // rotate the earth
    pDemo->angleEarth += earthRotation();
 
-   pDemo->ship.move();
-
    pDemo->move();
 
    // draw everything
@@ -191,8 +188,6 @@ void callBack(const Interface* pUI, void* p)
    pt.setMeters(0.0, 0.0);
    pDemo->gout->drawEarth(pt, pDemo->angleEarth);
    pDemo->ship.display(pDemo->gout);
-   pDemo->gps.display(pDemo->gout);
-   cout << "Satellite pos: " << pDemo->gps.getPosition().getMetersX() << ", " << pDemo->gps.getPosition().getMetersY() << endl;
 }
 
 double Position::metersFromPixels = 40.0;

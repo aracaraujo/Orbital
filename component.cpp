@@ -52,4 +52,10 @@ void Component::kill() {
     this->dead = true;
 }
 
+void Component::move(int time) {
+    this->acceleration = getGravity(this->position);
+    this->velocity.updateVelocity(this->acceleration,time);
+    updatePosition(this->position,this->velocity,this->acceleration,time);
+}
+
 
