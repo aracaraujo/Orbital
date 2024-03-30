@@ -27,9 +27,6 @@ public:
     // Destructor
     ~Satellite() {}
 
-    // move
-    void move() override;
-
     // Destroy
     virtual void destroy(std::vector<Component*>& satellites) = 0;
 
