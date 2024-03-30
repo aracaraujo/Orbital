@@ -33,7 +33,7 @@ class Demo
 public:
    Demo(Position ptUpperRight) :
       ptUpperRight(ptUpperRight),
-      gps(Position(0.0, 26560), Acceleration(), Velocity(-3880, 0.0), Angle(M_PI/2), 12.0),
+      gps(Position(0.0, 26560000), Acceleration(), Velocity(-3880000, 0.0), Angle(M_PI/2), 12.0),
       ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
       gout(new ogstream(Position()))
    {
@@ -176,6 +176,7 @@ void callBack(const Interface* pUI, void* p)
    pDemo->gout->drawEarth(pt, pDemo->angleEarth);
    pDemo->ship.display(pDemo->gout);
    pDemo->gps.display(pDemo->gout);
+   cout << "Satellite pos: " << pDemo->gps.getPosition().getMetersX() << ", " << pDemo->gps.getPosition().getMetersY() << endl;
 }
 
 double Position::metersFromPixels = 40.0;
