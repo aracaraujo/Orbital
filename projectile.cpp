@@ -5,10 +5,7 @@
 #include "projectile.h"
 
 void Projectile::move() {
-    if (age == 70){
-        kill();
-    }else{
-        updatePosition(this->position,this->velocity,this->acceleration,48);
-        incrementAge();
-    }
+    this->acceleration = getGravity(this->position);
+    this->velocity.updateVelocity(this->acceleration,48);
+    updatePosition(this->position,this->velocity,this->acceleration,48);
 }
