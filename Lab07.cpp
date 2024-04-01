@@ -44,6 +44,11 @@ public:
       // Adding satellites
       components.push_back(new Sputnik(Position(-36515095.13,21082000.0),Acceleration(),Velocity(2050.0,2684.68),Angle(),4));
       components.push_back(new Gps(Position(0.0, 26560000.0), Acceleration(), Velocity(-3880.0, 0.0), Angle(M_PI/2), 12.0));
+      components.push_back(new Gps(Position(23001634.72, 13280000.0), Acceleration(), Velocity(-1940.0, 3360.18), Angle(M_PI/2), 12.0));
+      components.push_back(new Gps(Position(23001634.72, -13280000.0), Acceleration(), Velocity(1940.0, 3360.18), Angle(M_PI/2), 12.0));
+      components.push_back(new Gps(Position(0.0, -26560000.0), Acceleration(), Velocity(3880.0, 0.0), Angle(M_PI/2), 12.0));
+      components.push_back(new Gps(Position(-23001634.72, -13280000.0), Acceleration(), Velocity(1940.0, -3360.18), Angle(M_PI/2), 12.0));
+      components.push_back(new Gps(Position(-23001634.72, 13280000.0), Acceleration(), Velocity(-1940.0, -3360.18), Angle(M_PI/2), 12.0));
       components.push_back(new Hubble(Position(0.0, -42164000.0), Acceleration(), Velocity(3100.0, 0.0), Angle(M_PI/2), 10.0));
       components.push_back(new Dragon(Position(0.0, 8000000.0), Acceleration(), Velocity(-7900.0, 0.0), Angle(M_PI/2), 7.0));
       components.push_back(new Starlink(Position(0.0, -13020000.0), Acceleration(), Velocity(5800.0, 0.0), Angle(M_PI/2), 6.0));
@@ -123,7 +128,6 @@ public:
         // We need to decide what will happen in this situation.
         if (computeDistance(ship.getPosition(),Position(0.0,0.0)) < (ship.getRadius() + EARTHRADIUS )){
             ship.kill();
-            cout << "Collision with the ship" << endl;
         }
 
         // Removing dead components from the list.
