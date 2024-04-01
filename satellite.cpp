@@ -30,10 +30,10 @@ void Gps::display(ogstream *gout) const {
 
 void Gps::destroy(vector<Component*> &satellites) {
     satellites.push_back(new GPSCenter(position, acceleration, velocity, angle, radius = 7));
-//    satellites.push_back(new GPSLeft(position, acceleration, velocity, angle, radius = 8));
-//    satellites.push_back(new GPSRight(position, acceleration, velocity, angle+=M_PI/2, radius = 8));
-//    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
-//    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
+    satellites.push_back(new GPSLeft(position, acceleration, velocity, angle, radius = 8));
+    satellites.push_back(new GPSRight(position, acceleration, velocity, angle+=M_PI/2, radius = 8));
+    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
+    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
 }
 
 /****************************
