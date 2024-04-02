@@ -38,6 +38,7 @@ public:
       ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
       gout(new ogstream(Position()))
    {
+
       ship.setLocationInPixels(-450,450);
       createStars();
 
@@ -53,6 +54,13 @@ public:
       components.push_back(new Dragon(Position(0.0, 8000000.0), Acceleration(), Velocity(-7900.0, 0.0), Angle(M_PI/2), 7.0));
       components.push_back(new Starlink(Position(0.0, -13020000.0), Acceleration(), Velocity(5800.0, 0.0), Angle(M_PI/2), 6.0));
       angleEarth = 0.0;
+   }
+
+    ~Demo(){
+       // Destroy everything that was allocated.
+        for(list<Component*>::iterator it = components.begin(); it != components.end(); ++it){
+            delete[] * it;
+        }
    }
 
     void createStars() {
