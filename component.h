@@ -11,6 +11,7 @@
 #include "angle.h"
 #include "uiDraw.h"
 #include "physics.h"
+#include <list>
 
 class Component {
 public:
@@ -44,6 +45,9 @@ public:
 
     // Display
     virtual void display(ogstream * gout)    const = 0;
+
+    // Destroy
+    virtual void destroy(list<Component*>& satellites) = 0;
 
     // Move
     void move(int time);

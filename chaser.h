@@ -44,6 +44,8 @@ public:
         gout->drawShip(this->position,this->angle.getRadians(),isSpacePress);
     }
 
+    void destroy(list<Component*>& satellites) {};
+
     bool getIsSpacePress() const{ return isSpacePress; };
 
     void setIsSpacePress(bool pressed) { this->isSpacePress = pressed; };

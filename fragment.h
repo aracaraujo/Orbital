@@ -24,6 +24,8 @@ public:
     // Display
     void display(ogstream * gout) const override;
 
+    void destroy(list<Component*>& satellites) {};
+
 private:
     int age;
 };
