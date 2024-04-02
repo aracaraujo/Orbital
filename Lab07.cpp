@@ -21,6 +21,7 @@
 #include "star.h"
 #include "satellite.h"
 #include "fragment.h"
+#include <list>
 #define GRAVITY 9.80665  // m/s2
 #define RADIUS 6378000 // earth radius
 using namespace std;
@@ -35,10 +36,9 @@ public:
    Demo(Position ptUpperRight) :
       ptUpperRight(ptUpperRight),
       ship(Position(),Acceleration(),Velocity(0.0,-2.0),Angle(M_PI/2),10.0),
-      gout(new ogstream(Position())),
-      projectiles(0)
+      gout(new ogstream(Position()))
    {
-      ship.setLocationInPixels(-250,250);
+      ship.setLocationInPixels(-450,450);
       createStars();
 
       // Adding satellites
@@ -62,12 +62,20 @@ public:
     }
 
     void display(){
+        // Draw stars.
+        for (Star& star : stars){
+            star.incrementPhase();
+            gout->drawStar(star.getPosition(), star.getPhase());
+            }
+        // Draw other components.
         for (Component* comp : components) {
             comp->display(gout);
         }
    }
 
     void move(){
+       list <Component*> :: iterator  it;
+       list <Component*> :: iterator  it2;
 
        ship.move(48);
 
@@ -75,9 +83,9 @@ public:
            comp->move(48);
        }
 
-       for (auto it = components.begin(); it != components.end(); ++it){
+       for (it = components.begin(); it != components.end(); ++it){
             // add loop to check for collision between the components
-           for (auto it2 = it + 1; it2 != components.end(); ++it2){
+           for ((it2 = it)++; it2 != components.end(); ++it2){
                if (!(*it)->isDead() && !(*it2)->isDead()){
                    // Distance is divided by 128k, so we have the value in pixels since the radius are in pixel.
                    if (computeDistance((*it)->getPosition(),(*it2)->getPosition())/128000 < ((*it)->getRadius() + (*it2)->getRadius() )){
@@ -97,12 +105,11 @@ public:
                 (*it)->kill();
             }
 
-            // Check projectile's age.
+            // Check projectile's and fragment's age.
             // When it hits 70 it will kill it if not it will just increment.
             if (Projectile* projectile = dynamic_cast<Projectile*>(*it)){
                 if(projectile->getAge() == 70){
                     projectile->kill();
-                    decrementProjectiles();
                 }else{
                     projectile->incrementAge();
                 }
@@ -111,7 +118,6 @@ public:
            if (Fragment* fragment = dynamic_cast<Fragment*>(*it)){
                if(fragment->getAge() == 70){
                    fragment->kill();
-                   decrementProjectiles();
                }else{
                    fragment->incrementAge();
                }
@@ -132,7 +138,7 @@ public:
 //                if (Satellite* satellite = dynamic_cast<Satellite*>(*it)){
 //                    satellite->destroy(components);
 //                }
-                delete *it;
+                (*it)->destroy(components);
                 it = components.erase(it);
             }else{
                 ++it;
@@ -140,16 +146,12 @@ public:
         }
 
    }
-   void incrementProjectiles() { this->projectiles++; };
-
-   void decrementProjectiles() { this->projectiles--; };
 
    Chaser ship;
    Star stars[200];
    Position ptUpperRight;
    ogstream * gout;
-   vector<Component*> components;
-   int projectiles;
+   list<Component*> components;
    double angleEarth;
 };
 
@@ -182,11 +184,7 @@ void callBack(const Interface* pUI, void* p)
    }
    if (pUI->isSpace())
    {
-       if(pDemo->projectiles < 5){
-           pDemo->components.push_back(new Projectile(pDemo->ship.shoot()));
-           pDemo->incrementProjectiles();
-       }
-
+       pDemo->components.push_back(new Projectile(pDemo->ship.shoot()));
    }
    //
    // perform all the game logic
@@ -199,12 +197,6 @@ void callBack(const Interface* pUI, void* p)
 
    // draw everything
    Position pt;
-
-   // draw a single star
-   for (Star& star : pDemo->stars){
-       star.incrementPhase();
-       pDemo->gout->drawStar(star.getPosition(), star.getPhase());
-   }
 
    pDemo->display();
 

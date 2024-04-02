@@ -28,7 +28,7 @@ public:
     ~Satellite() {}
 
     // Destroy
-    virtual void destroy(std::vector<Component*>& satellites) = 0;
+//    virtual void destroy(std::vector<Component*>& satellites) = 0;
 
 };
 
@@ -56,7 +56,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -83,7 +83,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -110,7 +110,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -137,7 +137,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -164,7 +164,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -204,7 +204,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -232,7 +232,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -259,7 +259,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -286,7 +286,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -313,7 +313,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -340,7 +340,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -367,7 +367,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -395,7 +395,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -422,7 +422,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -449,7 +449,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -477,7 +477,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 /****************************
@@ -504,7 +504,7 @@ public:
     void display(ogstream * gout) const override;
 
     // Destroy
-    void destroy(std::vector<Component*>& satellites) override;
+    void destroy(list<Component*>& satellites) override;
 };
 
 #endif //ORBITAL_SATELLITE_H

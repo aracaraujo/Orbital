@@ -47,6 +47,8 @@ public:
         gout->drawProjectile(this->position);
     }
 
+    void destroy(list<Component*>& satellites) {};
+
 private:
     int age;
 };
