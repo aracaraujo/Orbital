@@ -137,11 +137,8 @@ public:
         }
 
         // Removing dead components from the list.
-        for (auto it= components.begin(); it != components.end();){
+        for (it= components.begin(); it != components.end();){
             if((*it)->isDead()){
-//                if (Satellite* satellite = dynamic_cast<Satellite*>(*it)){
-//                    satellite->destroy(components);
-//                }
                 (*it)->destroy(components);
                 it = components.erase(it);
             }else{
