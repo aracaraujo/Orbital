@@ -6,6 +6,8 @@
 #define ORBITAL_SATELLITE_H
 
 #include "component.h"
+#include <cstdlib>
+#include <ctime>
 
 /****************************
  * SATELLITE
@@ -176,6 +178,8 @@ public:
     // Default Constructor
     GPSCenter();
 
+
+
     // Non-default constructor
     GPSCenter(Position pos, Acceleration acc, Velocity vel, Angle angle, double radius) : Satellite(
             pos,
@@ -183,6 +187,16 @@ public:
             vel,
             angle,
             radius) {
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set Angle
+        angle.setRadians(M_PI/2);
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
 
         double cosA = cos(angle.getRadians());
         double sinA = sin(angle.getRadians());
@@ -223,6 +237,28 @@ public:
             angle,
             radius) {
 
+        // Set angle
+        angle.setRadians(0);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 15.0 * sinA);
+        ptReturn.addPixelsY(15.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -250,6 +286,28 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set Angle
+        angle.setRadians(M_PI);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 15.0 * sinA);
+        ptReturn.addPixelsY(15.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -277,6 +335,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(0);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -304,6 +385,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(M_PI);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 150 * sinA);
+        ptReturn.addPixelsY(15.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -331,6 +435,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(M_PI/2);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 15.0 * sinA);
+        ptReturn.addPixelsY(15.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -358,6 +485,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians((3*M_PI)/2);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 15.0 * sinA);
+        ptReturn.addPixelsY(15.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -386,6 +536,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(0.0);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -413,6 +586,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(M_PI/2);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -440,6 +636,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians((3*M_PI)/2);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -468,6 +687,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(0.0);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
@@ -495,6 +737,29 @@ public:
             vel,
             angle,
             radius) {
+
+        // Set angle
+        angle.setRadians(M_PI/2);
+
+        // Seed for random number.
+        srand(time(NULL));
+
+        // Set speed
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+        vel.setHorizontalVelocity(vel.getHorizontalVelocity() + rand()%(9000-5000+1)+5000);
+
+
+        double cosA = cos(angle.getRadians());
+        double sinA = sin(angle.getRadians());
+
+        // start with our original point
+        Position ptReturn(pos);
+
+        // find the new values
+        ptReturn.addPixelsX(0.0 * cosA + 10.0 * sinA);
+        ptReturn.addPixelsY(10.0 * cosA - 0.0 * sinA);
+        setPosition(ptReturn);
+
     };
 
     // Destructor
