@@ -15,7 +15,7 @@ void Velocity::updateVelocity(const Acceleration& acceleration, double time) {
 Velocity::Velocity(double velocity, const Angle& angle) {
     this->dx = velocity * sin(angle.getRadians());
     this->dy = velocity * cos(angle.getRadians());
-};
+}
 
 std::ostream& operator << (std::ostream& out, const Velocity& vel)
 {
