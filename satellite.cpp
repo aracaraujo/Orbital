@@ -7,6 +7,7 @@
 #include <vector>
 #include "fragment.h"
 #include <list>
+#include "position.h"
 
 /****************************
  * Sputnik
@@ -32,7 +33,7 @@ void Gps::display(ogstream *gout) const {
 void Gps::destroy(list<Component*> &satellites) {
     satellites.push_back(new GPSCenter(position, acceleration, velocity, angle, radius = 7));
     satellites.push_back(new GPSLeft(position, acceleration, velocity, angle, radius = 8));
-    satellites.push_back(new GPSRight(position, acceleration, velocity, angle+=M_PI/2, radius = 8));
+    satellites.push_back(new GPSRight(position, acceleration, velocity, angle, radius = 8));
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
 }
@@ -45,10 +46,10 @@ void Hubble::display(ogstream *gout) const {
 }
 
 void Hubble::destroy(list<Component *> &satellites) {
-    satellites.push_back(new HubbleTelescope(position, acceleration, velocity, angle = M_PI/2, radius = 10));
-    satellites.push_back(new HubbleComputer(position, acceleration, velocity, angle = 0, radius = 7));
-    satellites.push_back(new HubbleLeft(position, acceleration, velocity, angle = M_PI, radius = 8));
-    satellites.push_back(new HubbleRight(position, acceleration, velocity, angle = 11*M_PI/6, radius = 8));
+    satellites.push_back(new HubbleTelescope(position, acceleration, velocity, angle, radius = 10));
+    satellites.push_back(new HubbleComputer(position, acceleration, velocity, angle, radius = 7));
+    satellites.push_back(new HubbleLeft(position, acceleration, velocity, angle, radius = 8));
+    satellites.push_back(new HubbleRight(position, acceleration, velocity, angle, radius = 8));
 }
 
 /****************************
@@ -59,9 +60,9 @@ void Dragon::display(ogstream *gout) const {
 }
 
 void Dragon::destroy(list<Component *> &satellites) {
-    satellites.push_back(new DragonCenter(position, acceleration, velocity, angle = M_PI/2, radius = 6));
-    satellites.push_back(new DragonLeft(position, acceleration, velocity, angle = 0, radius = 6));
-    satellites.push_back(new DragonRight(position, acceleration, velocity, angle = M_PI, radius = 6));
+    satellites.push_back(new DragonCenter(position, acceleration, velocity, angle, radius = 6));
+    satellites.push_back(new DragonLeft(position, acceleration, velocity, angle, radius = 6));
+    satellites.push_back(new DragonRight(position, acceleration, velocity, angle, radius = 6));
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
 }
@@ -74,12 +75,14 @@ void Starlink::display(ogstream *gout) const {
 }
 
 void Starlink::destroy(list<Component *> &satellites) {
-    satellites.push_back(new GPSCenter(position, acceleration, velocity, angle = M_PI/2, radius = 7));
-    satellites.push_back(new GPSLeft(position, acceleration, velocity, angle = 0, radius = 8));
-    satellites.push_back(new GPSRight(position, acceleration, velocity, angle = M_PI, radius = 8));
+    satellites.push_back(new StarlinkBody(position, acceleration, velocity, angle, radius = 2));
+    satellites.push_back(new StarlinkArray(position, acceleration, velocity, angle, radius = 4));
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
+    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
+
 }
+
 
 /****************************
  * GPS Parts
