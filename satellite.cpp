@@ -17,10 +17,15 @@ void Sputnik::display(ogstream *gout) const {
 }
 
 void Sputnik::destroy(list<Component*> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment += M_PI/4;    
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 /****************************
@@ -31,11 +36,14 @@ void Gps::display(ogstream *gout) const {
 }
 
 void Gps::destroy(list<Component*> &satellites) {
+    Angle angleFragment(this->angle);
     satellites.push_back(new GPSCenter(position, acceleration, velocity, angle, radius = 7));
     satellites.push_back(new GPSLeft(position, acceleration, velocity, angle, radius = 8));
     satellites.push_back(new GPSRight(position, acceleration, velocity, angle, radius = 8));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
+    angleFragment += M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 /****************************
@@ -60,11 +68,14 @@ void Dragon::display(ogstream *gout) const {
 }
 
 void Dragon::destroy(list<Component *> &satellites) {
+    Angle angleFragment(this->angle);
     satellites.push_back(new DragonCenter(position, acceleration, velocity, angle, radius = 6));
     satellites.push_back(new DragonLeft(position, acceleration, velocity, angle, radius = 6));
     satellites.push_back(new DragonRight(position, acceleration, velocity, angle, radius = 6));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 /****************************
@@ -75,11 +86,14 @@ void Starlink::display(ogstream *gout) const {
 }
 
 void Starlink::destroy(list<Component *> &satellites) {
+    Angle angleFragment(this->angle);
     satellites.push_back(new StarlinkBody(position, acceleration, velocity, angle, radius = 2));
     satellites.push_back(new StarlinkArray(position, acceleration, velocity, angle, radius = 4));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 5*M_PI/6, radius = 2));
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 
 }
 
@@ -93,8 +107,11 @@ void GPSCenter::display(ogstream *gout) const {
 }
 
 void GPSCenter::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
+    Angle angleFragment(this->angle);
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
+    angleFragment += M_PI/2;
     satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
 }
 
@@ -104,9 +121,12 @@ void GPSLeft::display(ogstream *gout) const {
 }
 
 void GPSLeft::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
+    Angle angleFragment(this->angle);
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // GPS Right
@@ -116,9 +136,12 @@ void GPSRight::display(ogstream *gout) const {
 }
 
 void GPSRight::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
+    Angle angleFragment(this->angle);
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 /****************************
@@ -131,9 +154,12 @@ void HubbleTelescope::display(ogstream *gout) const {
 }
 
 void HubbleTelescope::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
+    Angle angleFragment(this->angle);
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // Hubble Computer
@@ -143,8 +169,11 @@ void HubbleComputer::display(ogstream *gout) const {
 }
 
 void HubbleComputer::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // Hubble Left
@@ -154,8 +183,11 @@ void HubbleLeft::display(ogstream *gout) const {
 }
 
 void HubbleLeft::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // Hubble Right
@@ -165,8 +197,11 @@ void HubbleRight::display(ogstream *gout) const {
 }
 
 void HubbleRight::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 /****************************
@@ -179,10 +214,15 @@ void DragonCenter::display(ogstream *gout) const {
 }
 
 void DragonCenter::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 11*M_PI/6, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment -= M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // Dragon Left
@@ -192,8 +232,11 @@ void DragonLeft::display(ogstream *gout) const {
 }
 
 void DragonLeft::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // Dragon Right
@@ -203,8 +246,11 @@ void DragonRight::display(ogstream *gout) const {
 }
 
 void DragonRight::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
+    Angle angleFragment(this->angle);
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 /****************************
@@ -217,9 +263,12 @@ void StarlinkBody::display(ogstream *gout) const {
 }
 
 void StarlinkBody::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
+    Angle angleFragment(this->angle);
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
 // Starlink Array
@@ -228,7 +277,10 @@ void StarlinkArray::display(ogstream *gout) const {
 }
 
 void StarlinkArray::destroy(list<Component *> &satellites) {
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI/2, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = 0, radius = 2));
-    satellites.push_back(new Fragment(position, acceleration, velocity, angle = M_PI, radius = 2));
+    Angle angleFragment(this->angle);
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment -= M_PI/4;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
+    angleFragment += M_PI/2;
+    satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }

@@ -25,7 +25,8 @@ public:
         ptReturn.addPixelsX(0.0 * cosA + 4.0 * sinA);
         ptReturn.addPixelsY(4.0 * cosA - 0.0 * sinA);
         setPosition(ptReturn);
-
+        Velocity velocity(random(5000,9000),angle);
+        this->velocity += velocity;
         this->age = 0;
         this->limitAge = random(50,100);
     };
