@@ -34,8 +34,8 @@ public:
     int getAge() const { return age; }
     void setAge(int age) { this->age = age; }
 
-    int getLimitAge() const { return age; }
-    void setLimitAge(int age) { this->age = age; }
+    int getLimitAge() const { return limitAge; }
+    void setLimitAge(int limitAge) { this->limitAge = limitAge; }
 
     // Age fragment by one.
     void incrementAge() { this->age++; }
