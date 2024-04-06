@@ -195,9 +195,7 @@ void callBack(const Interface* pUI, void* p)
    {
        pDemo->components.push_back(new Projectile(pDemo->ship.shoot()));
    }
-   //
    // perform all the game logic
-   //
 
    // rotate the earth
    pDemo->angleEarth += earthRotation();
