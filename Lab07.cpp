@@ -129,7 +129,7 @@ public:
             }
 
            if (Fragment* fragment = dynamic_cast<Fragment*>(*it)){
-               if(fragment->getAge() == 70){
+               if(fragment->getAge() == fragment->getLimitAge()){
                    fragment->kill();
                }else{
                    fragment->incrementAge();
