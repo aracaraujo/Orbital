@@ -40,9 +40,10 @@ void Gps::destroy(list<Component*> &satellites) {
     satellites.push_back(new GPSCenter(position, acceleration, velocity, angle, radius = 7));
     satellites.push_back(new GPSLeft(position, acceleration, velocity, angle, radius = 8));
     satellites.push_back(new GPSRight(position, acceleration, velocity, angle, radius = 8));
-    angleFragment += M_PI/4;
+
+    angleFragment -= (M_PI/4) * 3;
     satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
-    angleFragment -= M_PI/2;
+    angleFragment -= M_PI/4;
     satellites.push_back(new Fragment(position, acceleration, velocity, angleFragment, radius = 2));
 }
 
